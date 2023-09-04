@@ -1,4 +1,4 @@
-# Google Apps Script Custom Connector for Looker Studio
+# Google Apps Script Custom API Connector for Looker Studio
 
 This repository contains a custom connector script to fetch university data from `universities.hipolabs.com` and visualize it in Looker Studio using Google Apps Script.
 
