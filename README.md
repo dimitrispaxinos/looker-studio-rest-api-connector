@@ -34,4 +34,3 @@ Feel free to fork this repository, make your changes, and submit pull requests. 
 ## License:
 
 This project is licensed under the MIT License. See the `LICENSE` file for more details.
-# looker-studio-rest-api-connector
