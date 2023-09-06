@@ -6,7 +6,8 @@ For a detailed walkthrough of this connector, check out our [blog post](https://
 
 Click on the image below to watch the accompanying video tutorial:
 
-[![YouTube Video Link]([https://raw.githubusercontent.com/dimitrispaxinos/looker-studio-rest-api-connector/main/bring-json-api-data-to-looker-studio-cover.png](https://www.youtube.com/watch?v=hTU2Pf670NY)
+[![YouTube Video Link](https://raw.githubusercontent.com/dimitrispaxinos/looker-studio-rest-api-connector/main/bring-json-api-data-to-looker-studio-cover.png](https://www.youtube.com/watch?v=hTU2Pf670NY)](https://www.youtube.com/watch?v=hTU2Pf670NY)
+
 
 ## Features:
 - Fetch dynamic university data based on country input.
