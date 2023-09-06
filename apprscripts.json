@@ -1,0 +1,14 @@
+{
+  "timeZone": "Europe/Athens",
+  "dependencies": {},
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "dataStudio": {
+    "name": "Looker Universities List Connector",
+    "company": "Apptiva",
+    "logoUrl": "https://media.licdn.com/dms/image/C4D0BAQFef_MA6VQpeQ/company-logo_100_100/0/1621108560492?e=1698278400&v=beta&t=vXBwKHavpEkU5GFY3Lb-IAS5FwBpI5f0ueTqwIwh8-E",
+    "addonUrl": "https://www.apptivasoftware.com",
+    "supportUrl": "https://www.apptivasoftware.com",
+    "description": "Looker Universities List Connector Descripion"
+  }
+}
