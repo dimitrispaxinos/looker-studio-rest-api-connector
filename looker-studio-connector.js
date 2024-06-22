@@ -1,11 +1,8 @@
 // Initialize the Community Connector using the DataStudioApp service
-const communityConnector = DataStudioApp.createCommunityConnector();
-
-// Base API endpoint for fetching university data
-const BASE_URL = 'http://universities.hipolabs.com/search';
+let communityConnector = DataStudioApp.createCommunityConnector();
 
 // Define the schema for the data structure of the connector
-const schema = [    
+let schema = [    
     {name: 'alpha_two_code', label: 'Alpha Two Code', dataType: 'STRING', semantics: {conceptType: 'DIMENSION'}},
     {name: 'country', label: 'Country', dataType: 'STRING', semantics: {conceptType: 'DIMENSION'}},    
     {name: 'name', label: 'Name', dataType: 'STRING', semantics: {conceptType: 'DIMENSION'}},    
@@ -18,7 +15,7 @@ function getSchema(request) {
 
 // Define the configuration settings for the connector, including user input fields
 function getConfig(request) {
-    const config = communityConnector.getConfig();
+    let config = communityConnector.getConfig();
 
     config.newInfo()
         .setId('instructions')
@@ -34,19 +31,50 @@ function getConfig(request) {
     return config.build();
 }
 
-// Fetch data from the API based on user input and return it to Data Studio
 function getData(request) {
-    const dataSchema = request.fields.filter(field => schema.some(element => element.name === field.name));
 
-    const countryParam = request.configParams.country;
-    const url = BASE_URL + (countryParam ? `?country=${encodeURIComponent(countryParam)}` : '');
+    // Get the fields requested by Looker Studio
+    let dataSchema = [];
+    request.fields.forEach(function (field) {
+        for (const element of schema) {
+            if (element.name == field.name) {
+                dataSchema.push(element);
+                break;
+            }
+        }
+    });
+
+    // Base API endpoint for fetching university data
+    let BASE_URL = 'http://universities.hipolabs.com/search';
+
+    // Construct the API URL based on user input
+    let countryParam = request.configParams.country;
+    let url = BASE_URL + ((countryParam != null && countryParam != '') ? '?country=' + encodeURIComponent(countryParam) : '');
     
-    const response = UrlFetchApp.fetch(url);
-    const parsedResponse = JSON.parse(response);
+    // Fetch and parse the API response
+    let response = UrlFetchApp.fetch(url);
+    let parsedResponse = JSON.parse(response);
+    let rows = [];
 
-    const rows = parsedResponse.map(university => {
-        const values = request.fields.map(field => university[field.name] || '');
-        return { values };
+    // Map the API response to the schema for Data Studio
+    parsedResponse.forEach(function(university) {
+        let row = [];
+        request.fields.forEach(function(field) {
+            switch (field.name) {
+                case 'name':
+                    row.push(university.name);
+                    break;
+                case 'country':
+                    row.push(university.country);
+                    break;
+                case 'alpha_two_code':
+                    row.push(university.alpha_two_code);
+                    break;
+                default:
+                    row.push('');
+            }
+        });
+        rows.push({ values: row });
     });
 
     return {
@@ -57,10 +85,12 @@ function getData(request) {
 
 // Specify the authentication type for the connector
 function getAuthType() {
-    return { type: 'NONE' };  // No authentication required
+    // This connector does not require authentication
+    return { type: 'NONE' };
 }
 
 // Check if the current user has administrative privileges
 function isAdminUser() {
-    return true;  // All users are treated as admin users in this example
+    // For this example, all users are treated as admin users
+    return true;
 }
